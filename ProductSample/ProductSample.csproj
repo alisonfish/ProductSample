@@ -174,6 +174,7 @@
     <Compile Include="Controllers\FileController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\MVController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -224,6 +225,7 @@
       <DependentUpon>IRepository.EF6.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\MemberViewModel.cs" />
     <Compile Include="Models\Occupation.cs">
       <DependentUpon>FabricsModel.tt</DependentUpon>
     </Compile>
@@ -1142,6 +1144,7 @@
     <Content Include="Views\Product\Delete.cshtml" />
     <Content Include="Views\File\Index.cshtml" />
     <Content Include="Scripts\version.json" />
+    <Content Include="Views\MV\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\Base\" />
