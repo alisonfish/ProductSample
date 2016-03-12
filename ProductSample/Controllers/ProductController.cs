@@ -1,6 +1,7 @@
 ﻿using ProductSample.Models;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -8,14 +9,18 @@ using System.Web.Mvc;
 
 namespace ProductSample.Controllers
 {
-    public class ProductController : Controller
+    public class ProductController : BaseController
     {
-        ProductRepository repo = RepositoryHelper.GetProductRepository();
+        //ProductRepository repo = RepositoryHelper.GetProductRepository();
 
         // GET: Product
         public ActionResult Index()
         {
             var data = repo.All();
+
+            //var data = repo.Get超級複雜的資料集();
+
+            //var repoOL = RepositoryHelper.GetOrderLineRepository(repo.UnitOfWork);
 
             return View(data);
         }
@@ -28,13 +33,13 @@ namespace ProductSample.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            var customerInfo = repo.Find(id);
+            var product = repo.Find(id);
 
-            if (customerInfo == null)
+            if (product == null)
             {
                 return HttpNotFound();
             }
-            return View(customerInfo);
+            return View(product);
         }
 
         // GET: Product/Create
@@ -45,62 +50,83 @@ namespace ProductSample.Controllers
 
         // POST: Product/Create
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        [ValidateAntiForgeryToken]
+        public ActionResult Create([Bind(Include = "ProductId,ProductName,Price,Active,Stock")] Product product)
         {
-            try
+            if (ModelState.IsValid)
             {
-                // TODO: Add insert logic here
-
+                repo.Add(product);
+                repo.UnitOfWork.Commit();
                 return RedirectToAction("Index");
             }
-            catch
-            {
-                return View();
-            }
+
+            return View(product);
         }
 
         // GET: Product/Edit/5
-        public ActionResult Edit(int id)
+        public ActionResult Edit(int? id)
         {
-            return View();
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Product product = repo.Find(id);
+            if (product == null)
+            {
+                return HttpNotFound();
+            }
+            return View(product);
         }
 
         // POST: Product/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit([Bind(Include = "ProductId,ProductName,Price,Active,Stock")] Product product)
         {
-            try
+            if (ModelState.IsValid)
             {
-                // TODO: Add update logic here
-
+                var db = (FabricsEntities)repo.UnitOfWork.Context;
+                db.Entry(product).State = EntityState.Modified;
+                db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            catch
-            {
-                return View();
-            }
+            return View(product);
         }
 
         // GET: Product/Delete/5
-        public ActionResult Delete(int id)
+        public ActionResult Delete(int? id)
         {
-            return View();
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            var product = repo.Find(id);
+            if (product == null)
+            {
+                return HttpNotFound();
+            }
+            return View(product);
         }
 
         // POST: Product/Delete/5
-        [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteConfirmed(int id)
         {
-            try
-            {
-                // TODO: Add delete logic here
+            var product = repo.Find(id);
+            product.IsDeleted = true;
+            repo.UnitOfWork.Commit();
+            return RedirectToAction("Index");
+        }
 
-                return RedirectToAction("Index");
-            }
-            catch
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
             {
-                return View();
+                var db = (FabricsEntities)repo.UnitOfWork.Context;
+                db.Dispose();
             }
+            base.Dispose(disposing);
         }
     }
 }
