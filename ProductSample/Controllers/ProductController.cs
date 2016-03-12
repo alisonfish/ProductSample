@@ -25,6 +25,21 @@ namespace ProductSample.Controllers
             return View(data);
         }
 
+        [HttpPost]
+        public ActionResult Index(IList<Product> data)
+        {
+            foreach (var item in data)
+            {
+                var product = repo.Find(item.ProductId);
+                product.Stock = item.Stock;
+                product.Price = item.Price;
+            }
+
+            repo.UnitOfWork.Commit();
+
+            return RedirectToAction("Index");
+        }
+
         // GET: Product/Details/5
         public ActionResult Details(int? id)
         {
