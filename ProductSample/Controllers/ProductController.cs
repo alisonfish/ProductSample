@@ -104,18 +104,35 @@ namespace ProductSample.Controllers
         // POST: Product/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ProductId,ProductName,Price,Active,Stock")] Product product)
+        //這邊放入FormCollection 純粹是要與GET方法分開 做判斷用的
+        public ActionResult Edit(int id, FormCollection form)
         {
-            if (ModelState.IsValid)
+            //[Bind(Include = "ProductId,ProductName,Price,Active,Stock")] Product product
+
+            Product product = repo.Find(id);
+
+            //延遲驗證:先找到資料，再做model binding
+            if(TryUpdateModel<Product>(product, new string[] {
+                "ProductId","ProductName","Price","Active","Stock" }))
             {
-                var db = (FabricsEntities)repo.UnitOfWork.Context;
-                db.Entry(product).State = EntityState.Modified;
-                db.SaveChanges();
+                repo.UnitOfWork.Commit();
 
                 TempData["ProductsEditDoneMsg"] = "商品編輯成功";
 
                 return RedirectToAction("Index");
             }
+
+            //if (ModelState.IsValid)
+            //{
+            //    var db = (FabricsEntities)repo.UnitOfWork.Context;
+            //    db.Entry(product).State = EntityState.Modified;
+            //    db.SaveChanges();
+
+            //    TempData["ProductsEditDoneMsg"] = "商品編輯成功";
+
+            //    return RedirectToAction("Index");
+            //}
+
             return View(product);
         }
 
