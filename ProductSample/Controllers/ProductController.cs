@@ -39,6 +39,9 @@ namespace ProductSample.Controllers
             {
                 return HttpNotFound();
             }
+            //ViewData["OrderLines"] = product.OrderLine.ToList();
+            ViewBag.OrderLines = product.OrderLine.ToList();
+
             return View(product);
         }
 
@@ -88,6 +91,9 @@ namespace ProductSample.Controllers
                 var db = (FabricsEntities)repo.UnitOfWork.Context;
                 db.Entry(product).State = EntityState.Modified;
                 db.SaveChanges();
+
+                TempData["ProductsEditDoneMsg"] = "商品編輯成功";
+
                 return RedirectToAction("Index");
             }
             return View(product);

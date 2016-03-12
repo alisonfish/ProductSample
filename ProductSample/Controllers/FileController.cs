@@ -42,5 +42,11 @@ namespace ProductSample.Controllers
             return Json(data, JsonRequestBehavior.AllowGet);
 
         }
+
+        public ActionResult RedirectTest()
+        {
+            // /Products/Edit/1
+            return RedirectToAction("Edit", "Products", new { id = 1 });
+        }
     }
 }
