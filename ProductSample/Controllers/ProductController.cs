@@ -1,4 +1,5 @@
 ﻿using ProductSample.Models;
+using ProductSample.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -16,7 +17,7 @@ namespace ProductSample.Controllers
         // GET: Product
         public ActionResult Index()
         {
-            var data = repo.All();
+            var data = repo.All().Take(5);
 
             //var data = repo.Get超級複雜的資料集();
 
@@ -26,18 +27,22 @@ namespace ProductSample.Controllers
         }
 
         [HttpPost]
-        public ActionResult Index(IList<Product> data)
+        public ActionResult Index(IList<ProductIndexViewModel> data)
         {
-            foreach (var item in data)
+            if (ModelState.IsValid)
             {
-                var product = repo.Find(item.ProductId);
-                product.Stock = item.Stock;
-                product.Price = item.Price;
+                foreach (var item in data)
+                {
+                    var product = repo.Find(item.ProductId);
+                    product.Stock = item.Stock;
+                    product.Price = item.Price;
+                }
+
+                repo.UnitOfWork.Commit();
+                return RedirectToAction("Index");
             }
 
-            repo.UnitOfWork.Commit();
-
-            return RedirectToAction("Index");
+            return View(repo.All().Take(5));
         }
 
         // GET: Product/Details/5

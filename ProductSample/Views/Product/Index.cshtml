@@ -51,12 +51,14 @@
                 </td>
                 <td>
                     @Html.EditorFor(modelItem => data[i].Price)
+                    @Html.ValidationMessageFor(modelItem => data[i].Price)
                 </td>
                 @*<td>
                         @Html.DisplayFor(modelItem => data[i].Active)
                     </td>*@
                 <td>
                     @Html.EditorFor(modelItem => data[i].Stock)
+                    @Html.ValidationMessageFor(modelItem => data[i].Stock)
                 </td>
                 <td>
                     @Html.ActionLink("Edit", "Edit", new { id = data[i].ProductId }) |
