@@ -16,10 +16,9 @@
     @i
 }
 
-@{ 
-    string s = string.Join(" ", Model.Select(p => p));
-    
-    @s
+@foreach (var i in Model)
+{
+    @(i+" ")
 }
 
 <ul>

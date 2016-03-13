@@ -173,6 +173,7 @@
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\MemberController.cs" />
     <Compile Include="Controllers\MVController.cs" />
+    <Compile Include="Controllers\NewLayoutController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -276,6 +277,23 @@
     <Content Include="App_Data\Fabrics_log.ldf">
       <DependentUpon>Fabrics.mdf</DependentUpon>
     </Content>
+    <Content Include="Bootstrap\calendar.html" />
+    <Content Include="Bootstrap\chart.html" />
+    <Content Include="Bootstrap\file-manager.html" />
+    <Content Include="Bootstrap\form.html" />
+    <Content Include="Bootstrap\gallery.html" />
+    <Content Include="Bootstrap\icon.html" />
+    <Content Include="Bootstrap\index.html" />
+    <Content Include="Bootstrap\login.html" />
+    <Content Include="Bootstrap\messages.html" />
+    <Content Include="Bootstrap\submenu.html" />
+    <Content Include="Bootstrap\submenu2.html" />
+    <Content Include="Bootstrap\submenu3.html" />
+    <Content Include="Bootstrap\table.html" />
+    <Content Include="Bootstrap\tasks.html" />
+    <Content Include="Bootstrap\typography.html" />
+    <Content Include="Bootstrap\ui.html" />
+    <Content Include="Bootstrap\widgets.html" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\snoopy.jpeg" />
@@ -347,6 +365,7 @@
     <Content Include="Scripts\angular-cookies.min.js.map" />
     <Content Include="Scripts\angular-aria.min.js.map" />
     <Content Include="Scripts\angular-animate.min.js.map" />
+    <Content Include="Bootstrap\README.md" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\i18n\angular-locale_aa-dj.js" />
     <Content Include="Scripts\i18n\angular-locale_aa-er.js" />
@@ -1149,8 +1168,15 @@
     <Content Include="Views\Home\Error.cshtml" />
     <Content Include="Views\Shared\ErrorArgument.cshtml" />
     <Content Include="Views\Home\RazorTest.cshtml" />
+    <Content Include="Views\NewLayout\Index.cshtml" />
+    <Content Include="Views\NewLayout\_LayoutBootstrap.cshtml" />
+    <Content Include="Views\NewLayout\_ViewStart.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Bootstrap\css\" />
+    <Folder Include="Bootstrap\font\" />
+    <Folder Include="Bootstrap\img\" />
+    <Folder Include="Bootstrap\js\" />
     <Folder Include="Views\Base\" />
   </ItemGroup>
   <ItemGroup>
