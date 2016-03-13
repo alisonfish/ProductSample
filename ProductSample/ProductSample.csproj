@@ -1146,6 +1146,8 @@
     <Content Include="Scripts\version.json" />
     <Content Include="Views\MV\Index.cshtml" />
     <Content Include="Views\Member\Login.cshtml" />
+    <Content Include="Views\Home\Error.cshtml" />
+    <Content Include="Views\Shared\ErrorArgument.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\Base\" />

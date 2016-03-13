@@ -1,0 +1,10 @@
+﻿@model System.Web.Mvc.HandleErrorInfo
+
+@{
+    ViewBag.Title = "HomeController's Error";
+}
+
+<h1 class="text-danger">HomeController's Error.</h1>
+<h2 class="text-danger">An error occurred while processing your request.</h2>
+
+<pre>@Model.Exception.Message</pre>
