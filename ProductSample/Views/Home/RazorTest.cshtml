@@ -1,0 +1,31 @@
+﻿@model Int32[]
+
+@{
+    ViewBag.Title = "RazorTest";
+}
+
+<h2>RazorTest</h2>
+
+@*@{ 
+    @:Hello World
+    <p>This is html code.</p>
+}*@
+
+@foreach (var i in Model)
+{
+    @i
+}
+
+<br>
+
+@foreach (var i in @Model)
+{
+    @:@i 
+}
+
+<ul>
+        @foreach (var i in @Model)
+        {
+            <li>@i</li>
+        }
+</ul>

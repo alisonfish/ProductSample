@@ -45,5 +45,11 @@ namespace ProductSample.Controllers
 
             return Content("No Error");
         }
+
+        public ActionResult RazorTest()
+        {
+            int[] data = new int[] { 1, 2, 3, 4, 5 };
+            return PartialView(data);
+        }
     }
 }
