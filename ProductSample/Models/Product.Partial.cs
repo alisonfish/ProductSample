@@ -5,7 +5,7 @@ namespace ProductSample.Models
     using System.ComponentModel.DataAnnotations;
     
     [MetadataType(typeof(ProductMetaData))]
-    public partial class Product
+    public partial class Product : IProduct
     {
     }
     

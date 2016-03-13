@@ -109,18 +109,7 @@ namespace ProductSample.Controllers
         {
             //[Bind(Include = "ProductId,ProductName,Price,Active,Stock")] Product product
 
-            Product product = repo.Find(id);
-
-            //延遲驗證:先找到資料，再做model binding
-            if(TryUpdateModel<Product>(product, new string[] {
-                "ProductId","ProductName","Price","Active","Stock" }))
-            {
-                repo.UnitOfWork.Commit();
-
-                TempData["ProductsEditDoneMsg"] = "商品編輯成功";
-
-                return RedirectToAction("Index");
-            }
+            //Product product = repo.Find(id);
 
             //if (ModelState.IsValid)
             //{
@@ -133,6 +122,27 @@ namespace ProductSample.Controllers
             //    return RedirectToAction("Index");
             //}
 
+            ////延遲驗證:先找到資料，再做model binding
+            //if(TryUpdateModel<Product>(product, new string[] {
+            //    "ProductId","ProductName","Price","Active","Stock" }))
+            //{
+            //    repo.UnitOfWork.Commit();
+
+            //    TempData["ProductsEditDoneMsg"] = "商品編輯成功";
+
+            //    return RedirectToAction("Index");
+            //}
+
+            IProduct product = repo.Find(id);
+
+            if (TryUpdateModel<IProduct>(product))
+            {
+                repo.UnitOfWork.Commit();
+
+                TempData["ProductsEditDoneMsg"] = "商品編輯成功";
+
+                return RedirectToAction("Index");
+            }
             return View(product);
         }
 
