@@ -52,15 +52,15 @@ namespace ProductSample.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+            Product product = repo.Find(id.Value);
 
-            var product = repo.Find(id);
-
-            if (product == null)
+            if (product == null && product.IsDeleted)
             {
                 return HttpNotFound();
             }
-            //ViewData["OrderLines"] = product.OrderLine.ToList();
-            ViewBag.OrderLines = product.OrderLine.ToList();
+
+            ////ViewData["OrderLines"] = product.OrderLine.ToList();
+            //ViewBag.OrderLines = product.OrderLine.ToList();
 
             return View(product);
         }

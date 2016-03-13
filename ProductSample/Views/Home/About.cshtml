@@ -4,11 +4,17 @@
 <h2>@ViewBag.Title.</h2>
 <h3>@ViewBag.Message</h3>
 
+@Html.ActionLink(" ", "Index", null,
+    new { @class = "btn btn-primary", data_name = "Will" })
+
+<a href="@Url.Action("Index")" class="btn btn-primary" data-name="Will"></a>
+
+
 <p>Use this area to provide additional information.</p>
 
-@section breadcrumb {
+@*@section breadcrumb {
     <li><a href="#">@ViewBag.Title</a></li>
-}
+}*@
 
 @section scripts {
     <script>

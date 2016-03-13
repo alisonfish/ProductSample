@@ -174,6 +174,7 @@
     <Compile Include="Controllers\MemberController.cs" />
     <Compile Include="Controllers\MVController.cs" />
     <Compile Include="Controllers\NewLayoutController.cs" />
+    <Compile Include="Controllers\OrderLinesController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -1171,6 +1172,11 @@
     <Content Include="Views\NewLayout\Index.cshtml" />
     <Content Include="Views\NewLayout\_LayoutBootstrap.cshtml" />
     <Content Include="Views\NewLayout\_ViewStart.cshtml" />
+    <Content Include="Views\OrderLines\Create.cshtml" />
+    <Content Include="Views\OrderLines\Delete.cshtml" />
+    <Content Include="Views\OrderLines\Details.cshtml" />
+    <Content Include="Views\OrderLines\Edit.cshtml" />
+    <Content Include="Views\OrderLines\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Bootstrap\css\" />

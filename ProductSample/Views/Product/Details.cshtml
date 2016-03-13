@@ -1,12 +1,9 @@
-﻿@model ProductSample.Models.Product
+﻿@model Product
 
 @{
     ViewBag.Title = "Details";
-    Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
 <h2>Details</h2>
-
 <div>
     <h4>Product</h4>
     <hr />
@@ -14,57 +11,40 @@
         <dt>
             @Html.DisplayNameFor(model => model.ProductName)
         </dt>
-
         <dd>
             @Html.DisplayFor(model => model.ProductName)
         </dd>
-
         <dt>
             @Html.DisplayNameFor(model => model.Price)
         </dt>
-
         <dd>
             @Html.DisplayFor(model => model.Price)
         </dd>
-
         <dt>
             @Html.DisplayNameFor(model => model.Active)
         </dt>
-
         <dd>
             @Html.DisplayFor(model => model.Active)
         </dd>
-
         <dt>
             @Html.DisplayNameFor(model => model.Stock)
         </dt>
-
         <dd>
             @Html.DisplayFor(model => model.Stock)
         </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.IsDeleted)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.IsDeleted)
-        </dd>
-
     </dl>
 </div>
-
 <hr />
+@*<h2>OrderLines</h2>
 
-<h2>OrderLines</h2>
-<table class="table">
-    <tr>
-        <th>ProductId</th>
-        <th>ProductName</th>
-        <th>LineNumber</th>
-        <th>Qty</th>
-        <th>LineTotal</th>
-    </tr>
+    <table class="table">
+        <tr>
+            <th>ProductId</th>
+            <th>ProductName</th>
+            <th>LineNumber</th>
+            <th>Qty</th>
+            <th>LineTotal</th>
+        </tr>
     @foreach (var item in ViewBag.OrderLines)
     {
         <tr>
@@ -75,8 +55,9 @@
             <td>@item.LineTotal</td>
         </tr>
     }
-</table>
-
+    </table>*@
+@*@Html.Action("Index", "OrderLines", new { ProductId = Model.ProductId })*@
+@Html.Partial("../OrderLines/Index", Model.OrderLine)
 <hr />
 
 <p>
