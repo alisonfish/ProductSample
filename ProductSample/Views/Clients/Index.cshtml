@@ -14,13 +14,32 @@
     }
 }
 
+<script>
+    @if (TempData["Msg"] != null)
+    {
+        <text>
+        alert('@(Convert.ToString(TempData["Msg"]))');
+        </text>
+    }
+</script>
+
+@section Scripts {
+    <script>
+        function ajaxSuccess() {
+            console.log('Succeed');
+        }
+    </script>
+}
+
 <h2>Index</h2>
 
 <p>
     @Ajax.ActionLink("Create New", "Create", new AjaxOptions() { UpdateTargetId = "Details" }) 
+    <img id="loading" src="~/Content/ajax-loader.gif" style="display: none" />
 </p>
 
-@Html.PagedListPager(data, p => Url.Action("Index", new { pageNo = p }))
+@*@Html.PagedListPager(data, p => Url.Action("Index", new { pageNo = p }))*@
+@Html.PagedListPager(data, p => Url.Action("Index", new { pageNo = p }), PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing("#main"))
 
 <table class="table">
     <tr>
@@ -126,7 +145,7 @@
             @Html.DisplayFor(modelItem => item.Occupation.OccupationName)
         </td>*@
         <td>
-            @Ajax.ActionLink("Edit", "Edit", new { id = item.ClientId },
+            @Ajax.ActionLink("Edit", "Edit", new { id = item.ClientId , pageNo = (int)ViewBag.pageNo },
                 new AjaxOptions { UpdateTargetId = "Details" }) |
             @Ajax.ActionLink("Details", "Details", new { id = item.ClientId },
                 new AjaxOptions { UpdateTargetId = "Details" }) |
@@ -138,6 +157,7 @@
 
 </table>
 
-@Html.PagedListPager(data, p => Url.Action("Index", new { pageNo = p }))
+@*@Html.PagedListPager(data, p => Url.Action("Index", new { pageNo = p }))*@
+@Html.PagedListPager(data, p => Url.Action("Index", new { pageNo = p }), PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing("#main"))
 
 <div id="Details"></div>

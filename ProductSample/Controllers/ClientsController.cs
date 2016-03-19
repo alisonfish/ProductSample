@@ -19,6 +19,8 @@ namespace ProductSample.Controllers
 
             var data = client.ToPagedList(pageNo, 10);
 
+            ViewBag.pageNo = pageNo;
+
             return View(data);
 
         }
@@ -64,7 +66,7 @@ namespace ProductSample.Controllers
         }
 
         // GET: Clients/Edit/5
-        public ActionResult Edit(int? id)
+        public ActionResult Edit(int? id, int pageNo = 1)
         {
             if (id == null)
             {
@@ -75,7 +77,10 @@ namespace ProductSample.Controllers
             {
                 return HttpNotFound();
             }
+            ViewBag.pageNo = pageNo;
+
             ViewBag.OccupationId = new SelectList(db.Occupation, "OccupationId", "OccupationName", client.OccupationId);
+            
             return View(client);
         }
 
@@ -84,13 +89,17 @@ namespace ProductSample.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ClientId,FirstName,MiddleName,LastName,Gender,DateOfBirth,CreditRating,XCode,OccupationId,TelephoneNumber,Street1,Street2,City,ZipCode,Longitude,Latitude,Notes")] Client client)
+        public ActionResult Edit([Bind(Include = "ClientId,FirstName,MiddleName,LastName,Gender,DateOfBirth,CreditRating,XCode,OccupationId,TelephoneNumber,Street1,Street2,City,ZipCode,Longitude,Latitude,Notes")] Client client, int pageNo = 1)
         {
             if (ModelState.IsValid)
             {
                 db.Entry(client).State = EntityState.Modified;
                 db.SaveChanges();
-                return View("Index", db.Client.Include(c => c.Occupation).Take(5));
+
+                TempData["Msg"] = "更新資料成功\r\n您剛才更新的是編號 " + client.ClientId + " 的資料";
+
+                return RedirectToAction("Index", new { pageNo = pageNo });
+
             }
             ViewBag.OccupationId = new SelectList(db.Occupation, "OccupationId", "OccupationName", client.OccupationId);
             return View(client);
