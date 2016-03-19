@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
+﻿using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
 using ProductSample.Models;
+using PagedList;
 
 namespace ProductSample.Controllers
 {
@@ -15,10 +13,14 @@ namespace ProductSample.Controllers
         private FabricsEntities db = new FabricsEntities();
 
         // GET: Clients
-        public ActionResult Index()
+        public ActionResult Index(int pageNo = 1)
         {
-            var client = db.Client.Include(c => c.Occupation);
-            return View(client.Take(5).ToList());
+            var client = db.Client.Include(c => c.Occupation).OrderBy(p => p.ClientId);
+
+            var data = client.ToPagedList(pageNo, 10);
+
+            return View(data);
+
         }
 
         // GET: Clients/Details/5
@@ -88,7 +90,7 @@ namespace ProductSample.Controllers
             {
                 db.Entry(client).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return View("Index", db.Client.Include(c => c.Occupation).Take(5));
             }
             ViewBag.OccupationId = new SelectList(db.Occupation, "OccupationId", "OccupationName", client.OccupationId);
             return View(client);

@@ -1,8 +1,17 @@
 ﻿@model IEnumerable<ProductSample.Models.Client>
 
+@using PagedList
+@using PagedList.Mvc
+@{
+    var data = Model as IPagedList;
+}
+
 @{
     ViewBag.Title = "Index";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    if (IsAjax)
+    {
+        Layout = "";
+    }
 }
 
 <h2>Index</h2>
@@ -10,6 +19,9 @@
 <p>
     @Ajax.ActionLink("Create New", "Create", new AjaxOptions() { UpdateTargetId = "Details" }) 
 </p>
+
+@Html.PagedListPager(data, p => Url.Action("Index", new { pageNo = p }))
+
 <table class="table">
     <tr>
         <th>
@@ -125,5 +137,7 @@
 }
 
 </table>
+
+@Html.PagedListPager(data, p => Url.Action("Index", new { pageNo = p }))
 
 <div id="Details"></div>
