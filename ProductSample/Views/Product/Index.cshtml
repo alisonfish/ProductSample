@@ -8,13 +8,20 @@
 }*@
 <h2>Index</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-    @if (!String.IsNullOrEmpty(Convert.ToString(TempData["ProductsEditDoneMsg"])))
-    {
-        <h3>@TempData["ProductsEditDoneMsg"]</h3>
-    }
-</p>
+@using (Html.BeginForm("Index", "Product", FormMethod.Get))
+{
+    <p>
+        @Html.ActionLink("Create New", "Create")
+        @Html.DropDownList("isActive", null, "--是否有效--", new { onchange = "this.form.submit();" })
+        @Html.TextBox("keyword", null, new { onchange = "this.form.submit();" })
+        @if (!String.IsNullOrEmpty(Convert.ToString(TempData["ProductsEditDoneMsg"])))
+        {
+            <h3>@TempData["ProductsEditDoneMsg"]</h3>
+        }
+    </p>
+}
+
+
 @using (Html.BeginForm())
 {
 
@@ -26,9 +33,9 @@
             <th>
                 @Html.DisplayNameFor(model => model.Price)
             </th>
-            @*<th>
-                    @Html.DisplayNameFor(model => model.Active)
-                </th>*@
+            <th>
+                @Html.DisplayNameFor(model => model.Active)
+            </th>
             <th>
                 @Html.DisplayNameFor(model => model.Stock)
             </th>
@@ -62,9 +69,9 @@
                     @Html.EditorFor(modelItem => data[i].Price)
                     @Html.ValidationMessageFor(modelItem => data[i].Price)
                 </td>
-                @*<td>
-                        @Html.DisplayFor(modelItem => data[i].Active)
-                    </td>*@
+                <td>
+                    @Html.DisplayFor(modelItem => data[i].Active)
+                </td>
                 <td>
                     @Html.EditorFor(modelItem => data[i].Stock)
                     @Html.ValidationMessageFor(modelItem => data[i].Stock)
@@ -88,9 +95,12 @@
 
 @if (ViewBag.SelectedProductId != null)
 {
-    if(ViewBag.type == "Details")
+    if (ViewBag.type == "Details")
     {
-        @Html.Partial("Details", ViewData["SelectedProductItem"])
+        if (ViewData["SelectedProductItem"] != null)
+        {
+            @Html.Partial("Details", ViewData["SelectedProductItem"])
+        }
     }
     else
     {

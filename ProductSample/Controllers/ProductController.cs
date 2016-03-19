@@ -15,13 +15,28 @@ namespace ProductSample.Controllers
         //ProductRepository repo = RepositoryHelper.GetProductRepository();
 
         // GET: Product
-        public ActionResult Index(int? ProductId, string type)
+        public ActionResult Index(int? ProductId, string type, bool? isActive, string keyword)
         {
-            var data = repo.All().Take(5);
-
+            var data = repo.All(true);
             //var data = repo.Get超級複雜的資料集();
 
+            if (isActive.HasValue)
+            {
+                data = data.Where(p => p.Active.HasValue && p.Active.Value == isActive.Value);
+            }
+
+            if (!String.IsNullOrEmpty(keyword))
+            {
+                data = data.Where(p => p.ProductName.Contains(keyword));
+            }
+
+            var items = new List<SelectListItem>();
+            items.Add(new SelectListItem() { Value = "true", Text = "有效" });
+            items.Add(new SelectListItem() { Value = "false", Text = "無效" });
+            ViewData["isActive"] = new SelectList(items, "Value", "Text");
+
             //var repoOL = RepositoryHelper.GetOrderLineRepository(repo.UnitOfWork);
+
             ViewBag.type = type;
 
             if (ProductId.HasValue)
@@ -29,7 +44,7 @@ namespace ProductSample.Controllers
                 ViewBag.SelectedProductId = ProductId.Value;
             }
 
-            return View(data);
+            return View(data.Take(5));
         }
 
         [HttpPost]

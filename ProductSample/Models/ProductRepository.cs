@@ -1,6 +1,4 @@
-using System;
 using System.Linq;
-using System.Collections.Generic;
 	
 namespace ProductSample.Models
 {   
@@ -9,6 +7,18 @@ namespace ProductSample.Models
         public override IQueryable<Product> All()
         {
             return base.All().Where(p => !p.IsDeleted);
+        }
+
+        public IQueryable<Product> All(bool isAll)
+        {
+            if (isAll)
+            {
+                return base.All();
+            }
+            else
+            {
+                return this.All();
+            }
         }
 
         public Product Find(int? id)

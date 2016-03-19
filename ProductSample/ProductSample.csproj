@@ -1177,6 +1177,8 @@
     <Content Include="Views\OrderLines\Details.cshtml" />
     <Content Include="Views\OrderLines\Edit.cshtml" />
     <Content Include="Views\OrderLines\Index.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\Boolean.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\Product.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Bootstrap\css\" />
